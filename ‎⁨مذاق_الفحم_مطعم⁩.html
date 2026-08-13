@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مذاق الفحم | شاورما</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,Arial,sans-serif;background:#fff8ef;color:#24170f;line-height:1.7}
+header{background:#24170f;color:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.logo{font-size:25px;font-weight:900;color:#f6b544}
+nav a{color:#fff;text-decoration:none;margin-right:22px;font-weight:700}
+.hero{min-height:520px;padding:80px 7%;display:flex;align-items:center;background:linear-gradient(90deg,#24170fe8,#24170f65),url('https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=1600&q=85') center/cover}
+.hero-content{max-width:650px;color:#fff}
+.badge{display:inline-block;background:#f6b544;color:#24170f;padding:6px 14px;border-radius:30px;font-weight:900;margin-bottom:15px}
+h1{font-size:clamp(42px,7vw,72px);line-height:1.1;margin-bottom:18px}
+.hero p{font-size:20px;margin-bottom:28px}
+.btn{display:inline-block;border:0;border-radius:12px;padding:13px 25px;font-size:17px;font-weight:900;cursor:pointer;text-decoration:none}
+.primary{background:#f6b544;color:#24170f}
+.secondary{background:#fff;color:#24170f;margin-right:8px}
+section{padding:65px 7%}
+.section-title{text-align:center;margin-bottom:35px}
+.section-title h2{font-size:36px}
+.section-title p{color:#806d60}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.card{background:#fff;border-radius:18px;padding:23px;box-shadow:0 8px 25px #2a170f12;border:1px solid #f1dfc9;display:flex;flex-direction:column}
+.card .icon{font-size:45px;margin-bottom:8px}
+.card h3{font-size:23px;margin-bottom:5px}
+.card p{color:#78665a;min-height:55px}
+.price{font-size:22px;font-weight:900;color:#b65d12;margin:12px 0}
+.order-btn{background:#24170f;color:#fff;border:0;border-radius:10px;padding:11px;cursor:pointer;font-weight:800}
+.order-btn:hover{background:#b65d12}
+.about{background:#24170f;color:#fff;text-align:center}
+.about p{max-width:750px;margin:12px auto;color:#eadfd7}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.contact-box{background:#fff;padding:28px;border-radius:18px;border:1px solid #f1dfc9}
+footer{background:#170d08;color:#d9c9bc;text-align:center;padding:25px}
+#toast{position:fixed;bottom:25px;right:25px;background:#24170f;color:#fff;padding:14px 20px;border-radius:12px;display:none;z-index:20;box-shadow:0 8px 25px #0003}
+.cart-top{background:#f6b544;color:#24170f;border:0;border-radius:10px;padding:9px 14px;font-weight:900;cursor:pointer;margin-right:10px}
+#cartCount{background:#24170f;color:#fff;border-radius:50%;padding:2px 7px;margin-right:4px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
+.modal-box{background:#fff8ef;width:min(520px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:25px;box-shadow:0 20px 60px #0005}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.close{border:0;background:#ead8c5;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:18px}
+.cart-item{background:#fff;border-radius:14px;padding:14px;margin:10px 0;border:1px solid #f1dfc9;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{border:0;background:#24170f;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer}
+.total{font-size:23px;font-weight:900;margin:18px 0;color:#b65d12}
+.checkout{width:100%;background:#f6b544;color:#24170f;border:0;border-radius:12px;padding:14px;font-size:18px;font-weight:900;cursor:pointer}
+.payment{display:none;margin-top:20px;background:#fff;padding:18px;border-radius:14px;border:1px solid #f1dfc9}
+.payment label{display:block;font-weight:800;margin:10px 0 5px}
+.payment input,.payment select{width:100%;padding:12px;border:1px solid #d8c4b0;border-radius:9px;font-size:16px}
+.demo-note{font-size:13px;color:#806d60;margin-top:10px}
+.empty{text-align:center;padding:30px;color:#806d60}
+@media(max-width:700px){header{padding:15px 5%}nav a{display:none}.hero{padding:65px 5%}.contact{grid-template-columns:1fr}section{padding:50px 5%}.hero p{font-size:17px}}
+
+.cart-btn{position:relative;background:#f6b544;color:#24170f;border:0;border-radius:12px;padding:10px 15px;font-weight:900;cursor:pointer}
+.cart-count{position:absolute;top:-8px;left:-8px;background:#b65d12;color:#fff;border-radius:50%;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:13px}
+.drawer{position:fixed;inset:0;background:#0006;display:none;z-index:30}
+.drawer.open{display:block}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92vw);background:#fff8ef;padding:25px;overflow:auto;box-shadow:-10px 0 30px #0003}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.close{border:0;background:#24170f;color:#fff;border-radius:9px;padding:8px 12px;cursor:pointer}
+.cart-item{background:#fff;border:1px solid #ead7c2;border-radius:13px;padding:13px;margin-bottom:10px}
+.cart-row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.qty button{width:28px;height:28px;border:0;border-radius:7px;background:#f6b544;cursor:pointer;font-weight:900}
+.total{font-size:23px;font-weight:900;margin:18px 0}
+.pay{width:100%;background:#24170f;color:#fff;border:0;border-radius:12px;padding:14px;font-size:17px;font-weight:900;cursor:pointer}
+.modal{position:fixed;inset:0;background:#0008;display:none;place-items:center;z-index:40;padding:20px}
+.modal.open{display:grid}
+.pay-box{background:#fff;border-radius:20px;padding:25px;width:min(430px,100%);position:relative}
+.pay-box input{width:100%;padding:12px;border:1px solid #ddc9b3;border-radius:10px;margin:7px 0 12px;font-size:16px}
+.pay-success{display:none;text-align:center;padding:25px}
+.pay-success h3{font-size:28px;color:#3b7d35;margin-bottom:10px}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🌯 مذاق الفحم</div>
+  <nav>
+    <a href="#menu">المنيو</a>
+    <a href="#about">عنّا</a>
+    <a href="#contact">تواصل معنا</a>
+    <button class="cart-top" onclick="openCart()">🛒 السلة <span id="cartCount">0</span></button>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-content">
+    <span class="badge">شاورما على أصولها</span>
+    <h1>مذاق الفحم</h1>
+    <p>طعم يخلّيك ترجع مرة ثانية ❤️<br>شاورما طازجة، صوصات لذيذة وعصيرات باردة.</p>
+    <a class="btn primary" href="#menu">شوف المنيو</a>
+    <a class="btn secondary" href="#contact">موقعنا</a>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="section-title">
+    <h2>🍽️ المنيو</h2>
+    <p>أسعار معقولة وطعم يستاهل التجربة</p>
+  </div>
+  <div class="menu-grid">
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=900&q=90" alt="شاورما دجاج"><h3>شاورما عادي</h3>
+      <p>شاورما دجاج طازجة مع الثوم والمخلل.</p>
+      <div class="price">7 ريال</div>
+      <button class="order-btn" onclick="addToCart('شاورما عادي',7)">أضف للطلب</button>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=900&q=90" alt="شاورما عربي"><h3>شاورما عربي</h3>
+      <p>قطع شاورما دجاج مع بطاطس، ثوم ومخلل.</p>
+      <div class="price">15 ريال</div>
+      <button class="order-btn" onclick="addToCart('شاورما عربي',15)">أضف للطلب</button>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=90" alt="شاورما صاروخ"><h3>شاورما صاروخ</h3>
+      <p>حجم كبير لمحبي الشاورما الثقيلة والمشبعة.</p>
+      <div class="price">12 ريال</div>
+      <button class="order-btn" onclick="addToCart('شاورما صاروخ',12)">أضف للطلب</button>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=900&q=90" alt="مشروبات غازية"><h3>مشروبات غازية</h3>
+      <p>اختيارك من المشروبات الغازية الباردة.</p>
+      <div class="price">3 ريال</div>
+      <button class="order-btn" onclick="addToCart('مشروب غازي',3)">أضف للطلب</button>
+    </article>
+    <article class="card">
+      <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=900&q=90" alt="عصير طبيعي"><h3>عصيرات طبيعية</h3>
+      <p>عصير طبيعي منعش حسب المتوفر.</p>
+      <div class="price">5 ريال</div>
+      <button class="order-btn" onclick="addToCart('عصير طبيعي',5)">أضف للطلب</button>
+    </article>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="section-title"><h2>ليش مذاق الفحم؟</h2></div>
+  <p>نقدّم شاورما بطعم بيتي وبجودة نهتم فيها من أول خبزة إلى آخر لقمة. هدفنا وجبة لذيذة بسعر يناسب الجميع.</p>
+</section>
+
+<section id="contact">
+  <div class="section-title">
+    <h2>📍 تواصل معنا</h2>
+    <p>المعلومات التالية قابلة للتعديل عند إضافة بيانات المطعم الفعلية.</p>
+  </div>
+  <div class="contact">
+    <div class="contact-box"><h3>📞 الطلبات</h3><p>اتصل بنا أو أضف رقم الواتساب الخاص بالمطعم هنا.</p></div>
+    <div class="contact-box"><h3>📍 موقع المطعم</h3><p>أضف عنوان فرع مذاق الفحم هنا.</p></div>
+  </div>
+</section>
+</main>
+
+<div id="toast"></div>
+
+<div id="drawer" class="drawer" onclick="if(event.target===this)closeCart()">
+  <aside class="cart-panel">
+    <div class="cart-head">
+      <h2>🛒 سلة الطلب</h2>
+      <button class="close" onclick="closeCart()">إغلاق</button>
+    </div>
+    <div id="cartItems"></div>
+    <div id="emptyCart" style="text-align:center;color:#806d60;padding:35px 0">السلة فاضية 😋<br>اختر شيء من المنيو</div>
+    <div id="cartBottom" style="display:none">
+      <div class="total">الإجمالي: <span id="cartTotal">0</span> ريال</div>
+      <button class="pay" onclick="openPayment()">💳 الدفع</button>
+    </div>
+  </aside>
+</div>
+
+<div id="paymentModal" class="modal">
+  <div class="pay-box">
+    <button class="close" style="position:absolute;left:18px;top:18px" onclick="closePayment()">×</button>
+    <div id="paymentForm">
+      <h2 style="margin-bottom:8px">💳 الدفع</h2>
+      <p style="color:#806d60">هذه صفحة دفع تجريبية وليست عملية دفع حقيقية.</p>
+      <label>الاسم</label>
+      <input id="payName" placeholder="اسم العميل">
+      <label>رقم البطاقة التجريبي</label>
+      <input id="payCard" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242">
+      <label>CVV</label>
+      <input id="payCvv" inputmode="numeric" maxlength="3" placeholder="123">
+      <button class="pay" onclick="fakePay()">تأكيد الدفع التجريبي</button>
+    </div>
+    <div id="paySuccess" class="pay-success">
+      <h3>تم الطلب بنجاح ✓</h3>
+      <p>تم تسجيل طلبك بشكل تجريبي.</p>
+      <p id="orderNumber"></p>
+      <button class="pay" style="margin-top:15px" onclick="closePayment();closeCart()">تم</button>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 مذاق الفحم — جميع الحقوق محفوظة</footer>
+
+<div id="cartModal" class="modal" onclick="if(event.target===this) closeCart()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🛒 سلة الطلب</h2>
+      <button class="close" onclick="closeCart()">✕</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="total" id="cartTotal">المجموع: 0 ريال</div>
+    <button class="checkout" onclick="showPayment()">إتمام الدفع</button>
+
+    <div id="payment" class="payment">
+      <h3>💳 دفع تجريبي</h3>
+      <p class="demo-note">هذا الدفع وهمي للتجربة فقط، ولا يتم خصم أي مبلغ حقيقي.</p>
+      <label>الاسم</label>
+      <input id="payName" placeholder="اسم العميل">
+      <label>رقم البطاقة التجريبي</label>
+      <input id="payCard" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242">
+      <label>تاريخ الانتهاء</label>
+      <input id="payExp" placeholder="12/30">
+      <label>CVV</label>
+      <input id="payCvv" inputmode="numeric" maxlength="4" placeholder="123">
+      <button class="checkout" style="margin-top:15px" onclick="fakePay()">دفع تجريبي الآن</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const cart = {};
+function addToCart(name, price){
+  if(!cart[name]) cart[name]={name,price,qty:0};
+  cart[name].qty++;
+  renderCart();
+  const toast=document.getElementById('toast');
+  toast.textContent='تمت إضافة «'+name+'» للسلة ✓';
+  toast.style.display='block';
+  clearTimeout(window.t);
+  window.t=setTimeout(()=>toast.style.display='none',1800);
+}
+function changeQty(name,delta){
+  if(!cart[name]) return;
+  cart[name].qty += delta;
+  if(cart[name].qty<=0) delete cart[name];
+  renderCart();
+}
+function renderCart(){
+  const items=Object.values(cart);
+  const count=items.reduce((s,x)=>s+x.qty,0);
+  const total=items.reduce((s,x)=>s+x.price*x.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartItems').innerHTML=items.map(x=>`
+    <div class="cart-item">
+      <div class="cart-row"><strong>${x.name}</strong><span>${x.price*x.qty} ريال</span></div>
+      <div class="cart-row" style="margin-top:8px">
+        <span>${x.price} ريال للحبة</span>
+        <span class="qty">
+          <button onclick="changeQty('${x.name}',-1)">−</button>
+          <b style="display:inline-block;width:28px;text-align:center">${x.qty}</b>
+          <button onclick="changeQty('${x.name}',1)">+</button>
+        </span>
+      </div>
+    </div>`).join('');
+  document.getElementById('emptyCart').style.display=items.length?'none':'block';
+  document.getElementById('cartBottom').style.display=items.length?'block':'none';
+  document.getElementById('cartTotal').textContent=total;
+}
+function openCart(){document.getElementById('drawer').classList.add('open');renderCart()}
+function closeCart(){document.getElementById('drawer').classList.remove('open')}
+function openPayment(){
+  if(Object.keys(cart).length===0)return;
+  document.getElementById('paymentModal').classList.add('open');
+}
+function closePayment(){document.getElementById('paymentModal').classList.remove('open')}
+function fakePay(){
+  const name=document.getElementById('payName').value.trim();
+  const card=document.getElementById('payCard').value.replace(/\s/g,'');
+  const cvv=document.getElementById('payCvv').value.trim();
+  if(!name || card.length!==16 || cvv.length!==3){
+    alert('أدخل بيانات تجريبية صحيحة: الاسم، 16 رقم للبطاقة و3 أرقام للـCVV.');
+    return;
+  }
+  document.getElementById('paymentForm').style.display='none';
+  document.getElementById('paySuccess').style.display='block';
+  document.getElementById('orderNumber').textContent='رقم الطلب: KH-'+Math.floor(10000+Math.random()*90000);
+  for(const k in cart) delete cart[k];
+  renderCart();
+}
+</script>
+</body>
+</html>
